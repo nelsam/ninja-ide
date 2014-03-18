@@ -238,6 +238,8 @@ class Editor(QPlainTextEdit):
         if show:
             self._mini = minimap.MiniMap(self)
             self._mini.set_code(self.toPlainText())
+            if self.useTabs:
+                self._mini.setTabStopWidth(self.tabStopWidth())
             #FIXME: register syntax
             self._mini.show()
         else:
@@ -292,8 +294,6 @@ class Editor(QPlainTextEdit):
         """Update tab stop width and margin line."""
         tab_size = self.pos_margin / settings.MARGIN_LINE * self.indent
         self.setTabStopWidth(tab_size)
-        if self._mini:
-            self._mini.setTabStopWidth(tab_size)
 
     def _block_contains_text(self):
         block = self.textCursor().block()
